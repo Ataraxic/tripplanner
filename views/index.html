@@ -1,1 +1,78 @@
 {% extends "layout.html" %}
+{% block content %}
+<div class="col-lg-3" id="leftbut">
+  <div class="btn-group" role="group" aria-label="...">
+    <button type="button" class="btn btn-default btn-sm">Day 1</button>
+    <button type="button" class="btn btn-default btn-sm">Day 2</button>
+    <button type="button" class="btn btn-default btn-sm">Day 3</button>
+  </div>
+  <button type="button" class="btn btn-primary btn-sm">+ Add a day</button>
+</div>
+
+<div class="col-lg-3 text-right">
+  <h3>Hotels</h3>
+  <!-- Single button -->
+  <div class="btn-group dropdown" >
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+      Hotels <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="#">Action</a></li>
+      <li><a href="#">Another action</a></li>
+      <li><a href="#">Something else here</a></li>
+      <li class="divider"></li>
+      <li><a href="#">Separated link</a></li>
+    </ul>
+  </div>
+  <button type="button" class="btn btn-primary btn-sm">Add</button>
+</div>
+
+<div class="col-lg-3 text-right" >
+  <h3>Things to do</h3>
+  <!-- Single button -->
+  <div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+      Activities <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="#">Action</a></li>
+      <li><a href="#">Another action</a></li>
+      <li><a href="#">Something else here</a></li>
+      <li class="divider"></li>
+      <li><a href="#">Separated link</a></li>
+    </ul>
+  </div>
+  <button type="button" class="btn btn-primary btn-sm">Add</button>
+</div>
+
+<div class="col-lg-3 text-right">
+  <h3>Restaurants</h3>
+    <!-- Single button -->
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+        food <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#">Action</a></li>
+        <li><a href="#">Another action</a></li>
+        <li><a href="#">Something else here</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Separated link</a></li>
+      </ul>
+    </div>
+  <button type="button" class="btn btn-primary btn-sm">Add</button>
+</div>
+
+<!-- <div>
+<h1>You've reached the Home us page</h1>
+</div> -->
+
+<script>
+
+{% autoescape false %}
+var all_hotels = {{ hotels | json }};
+var all_restaurants = {{ restaurants | json }};
+var all_things_to_do = {{ things_to_do | json }};
+{% endautoescape %}
+</script>
+{% endblock %}

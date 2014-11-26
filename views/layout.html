@@ -10,17 +10,38 @@
 
   <title>Justin's Trip Planner</title>
   <!-- Bootstrap core CSS -->
-  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet"> -->
   <!-- Custom styles for this template -->
+  <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link href="stylesheets/style.css" rel="stylesheet">
 </head>
 
 <body>
-  <div class="container">
+  <div class="container container-fluid">
   </div>
   <!-- Begin page content -->
-  <div id="page-container" class="container">
-    {% block navbar %} {% endblock %}
+  <div id="page-container" class="container-fluid">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Trip Planner</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class={{homeActive}}><a href="/">Home</a></li>
+            <li class={{aboutActive}} ><a href="/about">About</a></li>
+            <li class={{contactActive}}><a href="/contact">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
     {% block content %} {% endblock %}
     {% block button %} {% endblock %}
   </div>
@@ -34,7 +55,7 @@
   <!-- Bootstrap core JavaScript
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
   <script>
 
   {% autoescape false %}
@@ -44,6 +65,7 @@
   {% endautoescape %}
 
   </script>
-
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <!-- // <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
 </body>
 </html>
