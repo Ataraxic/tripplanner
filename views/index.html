@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="col-lg-3" id="leftbut">
+<div class="col-lg-4" id="leftbut">
   <div class="btn-group" role="group" aria-label="...">
-    <button type="button" class="btn btn-default btn-sm">Day 1</button>
-    <button type="button" class="btn btn-default btn-sm">Day 2</button>
-    <button type="button" class="btn btn-default btn-sm">Day 3</button>
+    <button type="button" class="btn btn-default btn-md">Day 1</button>
+    <button type="button" class="btn btn-default btn-md">Day 2</button>
+    <button type="button" class="btn btn-default btn-md">Day 3</button>
   </div>
-  <button type="button" class="btn btn-primary btn-sm">+ Add a day</button>
+  <button type="button" class="btn btn-primary btn-md">+ Add a day</button>
 </div>
 
-<div class="col-lg-3 text-right">
+<div class="test">
   <h3>Hotels</h3>
   <!-- Single button -->
   <div class="btn-group dropdown" >
@@ -20,14 +20,14 @@
       <li><a href="#">Action</a></li>
       <li><a href="#">Another action</a></li>
       <li><a href="#">Something else here</a></li>
-      <li class="divider"></li>
-      <li><a href="#">Separated link</a></li>
+      <!-- <li class="divider"></li>
+      <li><a href="#">Separated link</a></li> -->
     </ul>
   </div>
   <button type="button" class="btn btn-primary btn-sm">Add</button>
 </div>
 
-<div class="col-lg-3 text-right" >
+<div class="test" >
   <h3>Things to do</h3>
   <!-- Single button -->
   <div class="btn-group">
@@ -38,14 +38,12 @@
       <li><a href="#">Action</a></li>
       <li><a href="#">Another action</a></li>
       <li><a href="#">Something else here</a></li>
-      <li class="divider"></li>
-      <li><a href="#">Separated link</a></li>
     </ul>
   </div>
   <button type="button" class="btn btn-primary btn-sm">Add</button>
 </div>
 
-<div class="col-lg-3 text-right">
+<div class="test">
   <h3>Restaurants</h3>
     <!-- Single button -->
     <div class="btn-group">
@@ -56,23 +54,69 @@
         <li><a href="#">Action</a></li>
         <li><a href="#">Another action</a></li>
         <li><a href="#">Something else here</a></li>
-        <li class="divider"></li>
-        <li><a href="#">Separated link</a></li>
       </ul>
     </div>
   <button type="button" class="btn btn-primary btn-sm">Add</button>
 </div>
+<div style="clear:both;"></div>
+
+<div class="col-lg-4" style="clear:both">
+  <h3>Plan for DAY 1 <== hardcoded</h3>
+  <ul>
+    <li>list item 1</li>
+    <ul><li>sublist item a</li></ul>
+    <li>list item 2</li>
+  </ul>
+</div>
+
+<div id="maps">
+  <div id="map-canvas"></div>
+</div>
+
 
 <!-- <div>
 <h1>You've reached the Home us page</h1>
 </div> -->
 
-<script>
 
-{% autoescape false %}
-var all_hotels = {{ hotels | json }};
-var all_restaurants = {{ restaurants | json }};
-var all_things_to_do = {{ things_to_do | json }};
-{% endautoescape %}
+{% endblock %}
+
+{% block map %}
+<script type="text/javascript">
+$(function(){
+  function initialize_gmaps() {
+
+    // initialize new google maps LatLng object
+    var myLatlng = new google.maps.LatLng(40.705786,-74.007672);
+
+    // set the map options hash
+    var mapOptions = {
+      center: myLatlng,
+      zoom: 16,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    // get the maps div's HTML obj
+    var map_canvas_obj = document.getElementById("map-canvas");
+    console.log(map_canvas_obj);
+
+    // initialize a new Google Map with the options
+    var map = new google.maps.Map(map_canvas_obj, mapOptions);
+
+    // Add the marker to the map
+    var marker = new google.maps.Marker({
+      position: myLatlng,
+      title:"Hello World!"
+    });
+
+    // Add the marker to the map by calling setMap()
+    marker.setMap(map);
+  }
+
+  $(document).ready(function() {
+    initialize_gmaps();
+    console.log("initialized!!!!");
+  });
+});
 </script>
 {% endblock %}

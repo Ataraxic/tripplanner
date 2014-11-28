@@ -12,9 +12,11 @@
   <!-- Bootstrap core CSS -->
   <!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet"> -->
   <!-- Custom styles for this template -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzUpwhjtU0BkImVTW0UJ7nI8wevLRDTTs&sensor=true"></script>
   <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- // <script src="/public/javascripts/main.js"></script> -->
   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link href="stylesheets/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -43,8 +45,9 @@
       </div>
     </nav>
     {% block content %} {% endblock %}
-    {% block button %} {% endblock %}
+
   </div>
+
   <footer class="footer">
     <div class="container">
       <p class="text-muted">Place sticky footer content here.</p>
@@ -57,15 +60,18 @@
   <!-- Placed at the end of the document so the pages load faster -->
   <!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
   <script>
-
   {% autoescape false %}
   var all_hotels = {{ hotels | json }};
   var all_restaurants = {{ restaurants | json }};
   var all_things_to_do = {{ things_to_do | json }};
   {% endautoescape %}
-
   </script>
+
+  {% block map %}
+  {% endblock %}
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   <!-- // <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
 </body>
+<link href="stylesheets/style.css" rel="stylesheet">
+
 </html>
