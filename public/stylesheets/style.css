@@ -9,10 +9,12 @@ a {
 #leftbut {
   padding-top:3em;
   padding-bottom: 3em;
+  clear: both;
 }
 footer {
   position: fixed;
   bottom: 0;
+  clear: both;
 }
 h3 {
 
@@ -21,6 +23,7 @@ h3 {
   float: right;
   margin-left: 1em;
   display:inline-block;
+  width:20%;
 }
 #maps {
   float:right;
@@ -30,7 +33,14 @@ h3 {
   height:400px;
   clear:both;
 }
-
+/*#activities_dropdown {
+  display: inline;
+  width:10%;
+}*/
+.drop {
+  display:inline;
+  width:75%
+}
 /*.clearfix::after {
   content: ".";
   visibility: hidden;

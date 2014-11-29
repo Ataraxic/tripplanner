@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+
 <div class="col-lg-4" id="leftbut">
   <div class="btn-group" role="group" aria-label="...">
     <button type="button" class="btn btn-default btn-md">Day 1</button>
@@ -9,63 +10,39 @@
   <button type="button" class="btn btn-primary btn-md">+ Add a day</button>
 </div>
 
-<div class="test">
+<div class="test form-group">
   <h3>Hotels</h3>
-  <!-- Single button -->
-  <div class="btn-group dropdown" >
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-      Hotels <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" role="menu">
-      <li><a href="#">Action</a></li>
-      <li><a href="#">Another action</a></li>
-      <li><a href="#">Something else here</a></li>
-      <!-- <li class="divider"></li>
-      <li><a href="#">Separated link</a></li> -->
-    </ul>
-  </div>
-  <button type="button" class="btn btn-primary btn-sm">Add</button>
+  <select class="form-control drop" id="hotel_dropdown"></select>
+  <button type="button" class="btn btn-primary btn-md" id="addHotel">Add</button>
 </div>
 
-<div class="test" >
+<div class="test form-group" >
   <h3>Things to do</h3>
-  <!-- Single button -->
-  <div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-      Activities <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" role="menu">
-      <li><a href="#">Action</a></li>
-      <li><a href="#">Another action</a></li>
-      <li><a href="#">Something else here</a></li>
-    </ul>
-  </div>
-  <button type="button" class="btn btn-primary btn-sm">Add</button>
+  <select class="form-control drop" id="activities_dropdown"></select>
+  <button type="button" class="btn btn-primary btn-md" id="addThings">Add</button>
 </div>
 
-<div class="test">
+<div class="test form-group">
   <h3>Restaurants</h3>
-    <!-- Single button -->
-    <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-        food <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Another action</a></li>
-        <li><a href="#">Something else here</a></li>
-      </ul>
-    </div>
-  <button type="button" class="btn btn-primary btn-sm">Add</button>
+  <select class="form-control drop" id="food_dropdown">  </select>
+  <button type="button" class="btn btn-primary btn-md" id="addFood">Add</button>
 </div>
 <div style="clear:both;"></div>
 
-<div class="col-lg-4" style="clear:both">
-  <h3>Plan for DAY 1 <== hardcoded</h3>
+<div class="col-lg-4" id="listArea">
+  <h3>Plan for Day 1</h3>
   <ul>
-    <li>list item 1</li>
-    <ul><li>sublist item a</li></ul>
-    <li>list item 2</li>
+    <li id="singleHotel">Hotel
+      <ul style="display:none"><li>sublist for Hotel</li></ul>
+    </li>
+
+    <li id="activities">Things To Do
+      <ul></ul>
+    </li>
+
+    <li id="food">Restaurants
+      <ul></ul>
+    </li>
   </ul>
 </div>
 
@@ -82,41 +59,5 @@
 {% endblock %}
 
 {% block map %}
-<script type="text/javascript">
-$(function(){
-  function initialize_gmaps() {
 
-    // initialize new google maps LatLng object
-    var myLatlng = new google.maps.LatLng(40.705786,-74.007672);
-
-    // set the map options hash
-    var mapOptions = {
-      center: myLatlng,
-      zoom: 16,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-
-    // get the maps div's HTML obj
-    var map_canvas_obj = document.getElementById("map-canvas");
-    console.log(map_canvas_obj);
-
-    // initialize a new Google Map with the options
-    var map = new google.maps.Map(map_canvas_obj, mapOptions);
-
-    // Add the marker to the map
-    var marker = new google.maps.Marker({
-      position: myLatlng,
-      title:"Hello World!"
-    });
-
-    // Add the marker to the map by calling setMap()
-    marker.setMap(map);
-  }
-
-  $(document).ready(function() {
-    initialize_gmaps();
-    console.log("initialized!!!!");
-  });
-});
-</script>
 {% endblock %}

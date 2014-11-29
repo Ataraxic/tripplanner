@@ -18,18 +18,18 @@ var hotelSchema = new Schema({
   place: [placeSchema],
   num_stars: Number,
   amenities: String
-})
+});
 var thingToDoSchema = new Schema({
   name: String,
   place: String,
   age_range: String
-})
+});
 var restaurantSchema = new Schema({
   name: String,
   place: String,
   cuisine: String,
   price: {type: Number,max: 5,min:1}
-})
+});
 
 Place = mongoose.model('Place', placeSchema);
 Hotel = mongoose.model('Hotel', hotelSchema);

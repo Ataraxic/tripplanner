@@ -4,6 +4,9 @@ var models = require('../models');
 /* GET home page. */
 
 router.get('/', function(req, res) {
+  if (req.query.value){
+    var hotelName=req.query.value;
+  }
   models.Hotel.find(function(err, hotels) {
     models.Restaurant.find(function(err,restaurants){
       models.ThingsToDo.find(function(err,thingsToDo){
@@ -13,8 +16,9 @@ router.get('/', function(req, res) {
                               title: "Trip Planner" ,
                               homeActive: "active"
                             });
-      })
-    })
+      });
+    });
   });
 });
+
 module.exports = router;
