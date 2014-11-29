@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/tripplanner');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
+mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 
 var Place, Hotel,ThingsToDo,Restaurant;
 var Schema = mongoose.Schema;
@@ -21,12 +20,12 @@ var hotelSchema = new Schema({
 });
 var thingToDoSchema = new Schema({
   name: String,
-  place: String,
+  place: [placeSchema],
   age_range: String
 });
 var restaurantSchema = new Schema({
   name: String,
-  place: String,
+  place: [placeSchema],
   cuisine: String,
   price: {type: Number,max: 5,min:1}
 });
