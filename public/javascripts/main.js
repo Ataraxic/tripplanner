@@ -61,24 +61,24 @@ $(function(){
     }
   }
 
-  function showOneMarkerType(mapObject,selectedName,type){
-    var markerArr = mapObject.markerArr;
-    var map = mapObject.map;
-    for (var n=0;n<markerArr.length;n++){
-      if (arguments.length===3){
-        var typematch = (markerArr[n].type===type);
-      } else {
-        var typematch=true;
-      }
-      if (typematch){
-        if (markerArr[n].title===selectedName){
-          markerArr[n].setMap(map);
-        } else {
-          markerArr[n].setMap(null);
-        }
-      }
-    }
-  }
+  // function showOneMarkerType(mapObject,selectedName,type){
+  //   var markerArr = mapObject.markerArr;
+  //   var map = mapObject.map;
+  //   for (var n=0;n<markerArr.length;n++){
+  //     if (arguments.length===3){
+  //       var typematch = (markerArr[n].type===type);
+  //     } else {
+  //       var typematch=true;
+  //     }
+  //     if (typematch){
+  //       if (markerArr[n].title===selectedName){
+  //         markerArr[n].setMap(map);
+  //       } else {
+  //         markerArr[n].setMap(null);
+  //       }
+  //     }
+  //   }
+  // }
   function inMarkerArr(selectedName,markerArr){
     for (var i=0;i<markerArr.length;i++){
       console.log("in marker array?",markerArr[i].title,selectedName);
@@ -142,16 +142,13 @@ $(function(){
             anchorObj.off(); // Unsure if needed. Do on events persist after the element has been removed?
             anchorObj.parent().remove();
             anchorObj.remove();
+            removeMarker(mapObject,selectedName);
         });
         if (!inMarkerArr(selectedName,mapObject.markerArr)){
-          console.log("hotel adding");
           addMarker(dataObj,selectedName,mapObject,typeID);
-          if (typeID==="hotel"){
-            showOneMarkerType(mapObject,selectedName,typeID);
-          }
+          showMarker(mapObject,selectedName);
         } else {
-          console.log("not added");
-          showOneMarkerType(mapObject,selectedName);
+          showMarker(mapObject,selectedName);
         }
       }
     });
