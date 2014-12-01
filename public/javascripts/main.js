@@ -65,27 +65,6 @@ $(function(){
     }
   }
 
-  // function showOneMarkerType(mapObject,selectedName,type){
-  //   var markerArr = mapObject.markerArr;
-  //   var map = mapObject.map;
-  //   for (var n=0;n<markerArr.length;n++){
-  //     if (arguments.length===3){
-  //       var typematch = (markerArr[n].type===type);
-  //     } else {
-  //       var typematch=true;
-  //     }
-  //     if (typematch){
-  //       if (markerArr[n].title===selectedName){
-  //         markerArr[n].setMap(map);
-  //       } else {
-  //         markerArr[n].setMap(null);
-  //       }
-  //     }
-  //   }
-  // }
-  //
-
-
   /* jshint multistr: true */
   var dayTemplate = function (day){
     this.day=day;
@@ -112,11 +91,12 @@ $(function(){
   });
 
 
+
   function pickDay(){
     $("#btnGroup button").on("click",function(){     // Set Event Handler
       var listHTML = $("#listArea");
       var newDay=this.innerHTML.slice(-1);
-      currentDay=newDay;
+      currentDay=parseInt(newDay);
       var oldDay=listHTML[0].children[0].innerHTML.slice(-1);
       dayArr[oldDay-1].innerHTML=listHTML[0].innerHTML;    // Save day HTML
       listHTML.html(dayArr[newDay-1].innerHTML);// Load New Day
@@ -124,7 +104,6 @@ $(function(){
         anchorIDArr.forEach(function(elem){
           var anchorObj = $("#"+elem);
             anchorObj.on("click",function(){
-              // console.log(anchorObj.parent()[0].textContent);
               var selectedName = anchorObj.parent()[0].outerText;
               removeMarker(mapObject,selectedName.slice(0,-1));
               anchorObj.off(); // Unsure if needed. Do on events persist after the element has been removed?
@@ -143,11 +122,9 @@ $(function(){
     var map = mapObject.map;
     var markers= mapObject.markerArr;
     markers.forEach(function(elem){
-      console.log(elem.day,currentDay);
       if (elem.day===parseInt(currentDay)){
         elem.setMap(map);
       } else {
-        console.log(elem.title);
         elem.setMap(null);
       }
     });
@@ -156,7 +133,7 @@ $(function(){
 
   function inMarkerArr(selectedName,markerArr){
     for (var i=0;i<markerArr.length;i++){
-      if (markerArr[i].title===selectedName){
+      if (markerArr[i].title===selectedName && markerArr[i].day===parseInt(currentDay)){
         return true;
       }
     }
@@ -235,58 +212,4 @@ $(function(){
   initListnMaps(all_restaurants,"addFood","food_dropdown","restaurant","food",mapObject,3);
   initListnMaps(all_hotels,"addHotel","hotel_dropdown","hotel","singleHotel",mapObject,1);
 
-  //
-  // $("#addThings").on("click",function(){
-  //   var selectedName = $("#activities_dropdown option:selected").val();
-  //   var anchorID = selectedName.replace(/\s|,|&/g,"_");
-  //   if (!inList("activities",selectedName)){
-  //     $("#activities > ul").append("<li>"+selectedName+"<a class=close id="+anchorID+">×</a>"+"</li>");
-  //     $(('#'+anchorID)).on("click",function(){
-  //       $(('#'+anchorID)).off();
-  //       $(('#'+anchorID)).parent().remove();
-  //       $(('#'+anchorID)).remove();
-  //     });
-  //     if (!inMarkerArr(selectedName,mapObject.markerArr)){
-  //       addMarker(all_things_to_do,selectedName,mapObject,"activity");
-  //     } else {
-  //       showOneMarkerType(mapObject,selectedName);
-  //     }
-  //   }
-  // });
-  //
-  // $("#addFood").on("click",function(){
-  //   var selectedName = $("#food_dropdown option:selected").val();
-  //   var anchorID = selectedName.replace(/\s|,|&/g,"_");
-  //   if (!inList("food",selectedName) && $('#food li').length<3){
-  //     $("#food > ul").append("<li>"+selectedName+"<a class=close id="+anchorID+">×</a>"+"</li>");
-  //     $(('#'+anchorID)).on("click",function(){
-  //       $(('#'+anchorID)).off();
-  //       $(('#'+anchorID)).parent().remove();
-  //       $(('#'+anchorID)).remove();
-  //     });
-  //     if (!inMarkerArr(selectedName,mapObject.markerArr)){
-  //       addMarker(all_restaurants,selectedName,mapObject,"restaurant");
-  //     } else {
-  //       showOneMarkerType(mapObject,selectedName);
-  //     }
-  //   }
-  // });
-  //
-  // $("#addHotel").on("click",function(){
-  //   var selectedName = $("#hotel_dropdown option:selected").val();
-  //   var anchorID = selectedName.replace(/\s|,|&/g,"_");
-  //   if (!inList("singleHotel",selectedName)){
-  //     $("#singleHotel > ul").replaceWith("<ul><li>"+selectedName+"<a class=close id="+anchorID+">×</a></li></ul>");
-  //     $(('#'+anchorID)).on("click",function(){
-  //       $(('#'+anchorID)).off();
-  //       $('#singleHotel > ul').replaceWith('<ul style="display:none"><li>sublist for Hotel</li></ul>');
-  //     });
-  //     if (!inMarkerArr(selectedName,mapObject.markerArr)){
-  //       addMarker(all_hotels,selectedName,mapObject,"hotel");
-  //       showOneMarkerType(mapObject,selectedName,"hotel");
-  //     } else {
-  //       showOneMarkerType(mapObject,selectedName,"hotel");
-  //     }
-  //   }
-  // });
 });
