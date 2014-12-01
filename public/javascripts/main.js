@@ -1,4 +1,5 @@
 $(function(){
+
   var hotelPlace=$("#hotel_dropdown");
   var activityPlace=$("#activities_dropdown");
   var foodPlace=$("#food_dropdown");
@@ -18,9 +19,7 @@ $(function(){
     var list =$("#"+id+" li");
     list = $.makeArray(list);
     for (var i=0; i<list.length; i++) {
-      // console.log(list[i].childNodes[0].data,"diff",selectedName);
       if (list[i].childNodes[0].data===selectedName) {
-        // console.log("true",list[i].innerHTML,selectedName);
         return true;
       }
     }
@@ -55,9 +54,14 @@ $(function(){
     markerArr.push(marker);
     return {map: map, markerArr:markerArr};
   } // initialize_gmaps ends here!
-  function setAllMap(mapObject) {
+
+
+  var mapObject=initialize_gmaps();
+
+
+  function setAllMap(value) {
     for (var i = 0; i < mapObject.markerArr.length; i++) {
-      mapObject.markerArr[i].setMap(mapObject.map);
+      mapObject.markerArr[i].setMap(value);
     }
   }
 
@@ -79,9 +83,79 @@ $(function(){
   //     }
   //   }
   // }
+  //
+
+
+  /* jshint multistr: true */
+  var dayTemplate = function (day){
+    this.day=day;
+    this.innerHTML = "<h3>Plan for Day "+day+"</h3> \
+    <ul><li id='singleHotel'>Hotel \
+    <ul></ul></li><li id='activities'>Things To Do<ul></ul> \
+    </li><li id='food'>Restaurants<ul></ul></li></ul>";
+  };
+  var dayArr = [];
+  function gen3Day(){
+    for (var i=1;i<=3;i++){
+      dayArr.push(new dayTemplate(i));
+    }
+  }
+  gen3Day();
+
+  var day=3;
+  var currentDay = 1;
+  $("#leftbut > button").on("click",function(){
+    day++;
+    $("#leftbut > div").append("<button type='button' class='btn btn-default btn-sm'>Day"+day+"</button>");
+    pickDay();
+    dayArr.push(new dayTemplate(day));
+  });
+
+
+  function pickDay(){
+    $("#btnGroup button").on("click",function(){     // Set Event Handler
+      var listHTML = $("#listArea");
+      var newDay=this.innerHTML.slice(-1);
+      currentDay=newDay;
+      var oldDay=listHTML[0].children[0].innerHTML.slice(-1);
+      dayArr[oldDay-1].innerHTML=listHTML[0].innerHTML;    // Save day HTML
+      listHTML.html(dayArr[newDay-1].innerHTML);// Load New Day
+      if ($("#listArea a")[0]){
+        anchorIDArr.forEach(function(elem){
+          var anchorObj = $("#"+elem);
+            anchorObj.on("click",function(){
+              // console.log(anchorObj.parent()[0].textContent);
+              var selectedName = anchorObj.parent()[0].outerText;
+              removeMarker(mapObject,selectedName.slice(0,-1));
+              anchorObj.off(); // Unsure if needed. Do on events persist after the element has been removed?
+              anchorObj.parent().remove();
+              anchorObj.remove();
+          });
+        });
+      } // Adding ability to remove markers and list items
+      showCurrentMarkers();// Hide Old Markers
+      // Show New Markers
+    });
+  }
+  pickDay();
+
+  function showCurrentMarkers(){
+    var map = mapObject.map;
+    var markers= mapObject.markerArr;
+    markers.forEach(function(elem){
+      console.log(elem.day,currentDay);
+      if (elem.day===parseInt(currentDay)){
+        elem.setMap(map);
+      } else {
+        console.log(elem.title);
+        elem.setMap(null);
+      }
+    });
+  }
+
+
   function inMarkerArr(selectedName,markerArr){
     for (var i=0;i<markerArr.length;i++){
-      console.log("in marker array?",markerArr[i].title,selectedName);
       if (markerArr[i].title===selectedName){
         return true;
       }
@@ -99,7 +173,8 @@ $(function(){
           position: latLng,
           map: mapObject.map,
           title: dataObj[i].name,
-          type: type
+          type: type,
+          day: currentDay
         });
         mapObject.markerArr.push(marker);
         break;
@@ -129,12 +204,14 @@ $(function(){
 
 
 
-  var mapObject=initialize_gmaps();
-
+  var anchorIDArr = [];
   function initListnMaps(dataObj,addID,dropID,typeID,listID,mapObject,lengthLimit){
     $("#"+addID).on("click",function(){ //Event Handler for Primary Add Buttons
       var selectedName = $("#"+dropID+" option:selected").val(); //Name of selected Item
       var anchorID = selectedName.replace(/\s|,|&|\'/g,"_"); //Generates Id from selected Item
+      if ($.inArray(anchorID,anchorIDArr)===-1){
+        anchorIDArr.push(anchorID);
+      }
       if (!inList(listID,selectedName) && $('#'+listID+' li').length<lengthLimit){ // Makes sure item is not already in list, and not exceeding max #
         $("#"+listID+" > ul").append("<li>"+selectedName+"<a class=close id="+anchorID+">X</a>"+"</li>"); //Adds HTML
         var anchorObj = $('#'+anchorID); // Saves JQuery for "X" button
