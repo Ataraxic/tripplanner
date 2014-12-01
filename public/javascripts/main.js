@@ -97,6 +97,7 @@ $(function(){
       var listHTML = $("#listArea");
       var newDay=this.innerHTML.slice(-1);
       currentDay=parseInt(newDay);
+      console.log(currentDay);
       var oldDay=listHTML[0].children[0].innerHTML.slice(-1);
       dayArr[oldDay-1].innerHTML=listHTML[0].innerHTML;    // Save day HTML
       listHTML.html(dayArr[newDay-1].innerHTML);// Load New Day
@@ -121,6 +122,7 @@ $(function(){
   function showCurrentMarkers(){
     var map = mapObject.map;
     var markers= mapObject.markerArr;
+    console.log(markers);
     markers.forEach(function(elem){
       if (elem.day===parseInt(currentDay)){
         elem.setMap(map);
@@ -130,11 +132,12 @@ $(function(){
     });
   }
 
-
   function inMarkerArr(selectedName,markerArr){
     for (var i=0;i<markerArr.length;i++){
-      if (markerArr[i].title===selectedName && markerArr[i].day===parseInt(currentDay)){
-        return true;
+      if (markerArr[i].title===selectedName){
+       if (markerArr[i].day===parseInt(currentDay)){
+          return true;
+        }
       }
     }
     return false;
@@ -162,9 +165,9 @@ $(function(){
     var markerArr = mapObject.markerArr;
     var map = mapObject.map;
     for (var i=0;i<markerArr.length;i++){
-      if (markerArr[i].title===selectedName){
+      if (markerArr[i].title===selectedName && markerArr[i].day===parseInt(currentDay)){
         markerArr[i].setMap(null);
-        break;
+        markerArr=markerArr.splice(i,1);
       }
     }
   }
@@ -178,8 +181,6 @@ $(function(){
       }
     }
   }
-
-
 
   var anchorIDArr = [];
   function initListnMaps(dataObj,addID,dropID,typeID,listID,mapObject,lengthLimit){
